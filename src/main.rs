@@ -1,5 +1,5 @@
-mod lib;
+use helix_engine::run;
 
 fn main() {
-    lib::run();
+    run();
 }

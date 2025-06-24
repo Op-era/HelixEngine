@@ -1,3 +1,4 @@
+//state.rs
 use wgpu::util::DeviceExt;
 use winit::window::Window;
 use crate::rendering::pipeline::Pipeline;

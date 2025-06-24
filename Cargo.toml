@@ -1,5 +1,5 @@
 [package]
-name = "volumetric_engine"
+name = "helix_engine"
 version = "0.1.0"
 edition = "2021"
 

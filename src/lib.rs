@@ -1,9 +1,12 @@
-mod state;
-mod input;
-mod rendering;
+pub mod state;
+pub mod input;
+pub mod rendering {
+    pub mod pipeline;
+}
 
-use state::State;
-use winit::{
+pub use state::State;
+pub use input::Input;
+pub use winit::{
     event::*,
     event_loop::{ControlFlow, EventLoop},
     window::WindowBuilder,
@@ -13,7 +16,7 @@ pub fn run() {
     env_logger::init();
     let event_loop = EventLoop::new();
     let window = WindowBuilder::new()
-        .with_title("Volumetric Engine")
+        .with_title("Helix Engine")
         .build(&event_loop)
         .unwrap();
 

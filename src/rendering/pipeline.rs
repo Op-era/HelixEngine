@@ -1,5 +1,4 @@
 use wgpu::util::DeviceExt;
-use crate::rendering::shaders;
 
 pub struct Pipeline {
     pipeline: wgpu::RenderPipeline,
