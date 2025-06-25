@@ -1,11 +1,9 @@
-use wgpu::util::DeviceExt;
-
 pub struct Pipeline {
     pipeline: wgpu::RenderPipeline,
 }
 
 impl Pipeline {
-    pub fn new(device: &wgpu::Device, config: &wgpu::SurfaceConfiguration, _queue: &wgpu::Queue) -> Self {
+    pub fn new(device: &wgpu::Device, config: &wgpu::SurfaceConfiguration, _queue: &wgpu::Queue, camera_bind_group_layout: &wgpu::BindGroupLayout) -> Self {
         let shader_source = include_str!("shaders/shader.wgsl");
         let shader = device.create_shader_module(wgpu::ShaderModuleDescriptor {
             label: Some("Shader"),
@@ -14,7 +12,7 @@ impl Pipeline {
 
         let pipeline_layout = device.create_pipeline_layout(&wgpu::PipelineLayoutDescriptor {
             label: Some("Pipeline Layout"),
-            bind_group_layouts: &[],
+            bind_group_layouts: &[camera_bind_group_layout],
             push_constant_ranges: &[],
         });
 
@@ -44,7 +42,7 @@ impl Pipeline {
         Self { pipeline }
     }
 
-    pub fn render(&self, encoder: &mut wgpu::CommandEncoder, view: &wgpu::TextureView) {
+    pub fn render(&self, encoder: &mut wgpu::CommandEncoder, view: &wgpu::TextureView, camera_bind_group: &wgpu::BindGroup) {
         let mut render_pass = encoder.begin_render_pass(&wgpu::RenderPassDescriptor {
             label: Some("Render Pass"),
             color_attachments: &[Some(wgpu::RenderPassColorAttachment {
@@ -59,6 +57,7 @@ impl Pipeline {
         });
 
         render_pass.set_pipeline(&self.pipeline);
+        render_pass.set_bind_group(0, camera_bind_group, &[]);
         render_pass.draw(0..3, 0..1);
     }
 }
